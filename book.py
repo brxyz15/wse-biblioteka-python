@@ -25,7 +25,7 @@ def addBook(bookWindow, title, author, bookCount):
             return
     
     bookInfo = parseBooks()[['ID', 'AUTHOR', 'TITLE']]
-    lastId = bookInfo.get("ID").tail(1)
+    lastId = str(bookInfo.get("ID").tail(1)).split()[1]
     authors = bookInfo.get("AUTHOR").tolist()
     titles = bookInfo.get("TITLE").tolist()
     currentDate = str(datetime.now()).split()[0]
@@ -48,10 +48,24 @@ def addBook(bookWindow, title, author, bookCount):
     except FileNotFoundError as e:
         tkinter.messagebox.showerror("FileNotFoundError", e, parent=bookWindow)
         return
-        
-                    
-                    
+
 def removeBook(bookWindow, bookList, title = "", bookId = 0):
+    def typeInAnything(func):
+        def something():
+            print("test")
+            func()
+        return something
+
+    @typeInAnything
+    def printDate():
+        print(str(datetime.now()).split()[0])
+
+        def printDateAddHour():
+            print(str(datetime.now()).split()[1])
+        return printDateAddHour()
+
+    printDate()
+
     try:
         if((len(title) == 0 or title.isspace()) and (bookId == 0 or len(bookId) == 0 or bookId.isspace())):
             tkinter.messagebox.showwarning("Ostrzeżenie!", "Nie wpisano poprawnych wartości.", parent=bookWindow)
